@@ -20,7 +20,15 @@ public class PaymentCardForm: PaymentForm {
     @IBOutlet private weak var payButton: Button!
     @IBOutlet private weak var cardTypeIcon: UIImageView!
     @IBOutlet private weak var helperSafeAreaBottomView: UIView!
-    
+
+    // ADDED
+
+    @IBOutlet private weak var appIcon: UIImageView!
+    @IBOutlet private weak var appName: UILabel!
+    @IBOutlet private weak var pricePerMonth: UILabel!
+
+    // END
+
     var onPayClicked: ((_ cryptogram: String, _ email: String?) -> ())?
     
     @discardableResult
@@ -40,6 +48,17 @@ public class PaymentCardForm: PaymentForm {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        // ADDED
+        appName.text = configuration.appName
+        appIcon.image = configuration.appIcon
+
+        if configuration.tariffType == .month {
+            pricePerMonth.text = "\(configuration.paymentData.amount) ₽/мес"
+        } else {
+            pricePerMonth.text = "\(configuration.paymentData.amount) ₽/полгода"
+        }
+        // END
 
         self.receiptButton.onAction = {
             self.receiptButton.isSelected = !self.receiptButton.isSelected
@@ -119,7 +138,13 @@ public class PaymentCardForm: PaymentForm {
         self.configureTextFields()
         self.hideKeyboardWhenTappedAround()
     }
-    
+
+    // ADDED
+    @IBAction func onHide(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    // END
+
     private func configureTextFields(){
         let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.mainTextPlaceholder]
         self.cardNumberTextField.attributedPlaceholder = NSAttributedString.init(string: "Номер карты", attributes: attributes)

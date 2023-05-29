@@ -19,9 +19,22 @@ public class PaymentConfiguration {
     let disableApplePay: Bool
     let disableYandexPay: Bool
     let apiUrl: String
-    
-    
-    public init(publicId: String, paymentData: PaymentData, delegate: PaymentDelegate?, uiDelegate: PaymentUIDelegate?, scanner: PaymentCardScanner?,
+
+    // ADD
+    let appName: String
+    let appIcon: UIImage?
+
+    public enum TariffType {
+        case month
+        case halfYear
+    }
+
+    let tariffType: TariffType
+    // END
+
+    // ADD
+
+    public init(publicId: String, paymentData: PaymentData, appName: String, appIcon: UIImage?, tariffType: PaymentConfiguration.TariffType, delegate: PaymentDelegate?, uiDelegate: PaymentUIDelegate?, scanner: PaymentCardScanner?,
                 showEmailField: Bool = false, useDualMessagePayment: Bool = false, disableApplePay: Bool = false,
 disableYandexPay: Bool = false, apiUrl: String = "") {
         self.publicId = publicId
@@ -34,5 +47,10 @@ disableYandexPay: Bool = false, apiUrl: String = "") {
         self.disableApplePay = disableApplePay
         self.disableYandexPay = disableYandexPay
         self.apiUrl = apiUrl
+        self.appName = appName
+        self.appIcon = appIcon
+        self.tariffType = tariffType
     }
+
+    // END
 }
